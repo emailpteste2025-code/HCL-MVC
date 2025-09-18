@@ -1,0 +1,67 @@
+:root {
+  --azul-escuro: #0d2240;
+  --azul-secundario: #142952;
+  --dourado: #d4af37;
+}
+
+/* Geral */
+body {
+  background: #f8f9fa;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/* Login */
+body.login-page {
+  background: var(--azul-secundario);
+}
+.card {
+  border-top: 4px solid var(--dourado);
+}
+.card-title, h3 {
+  color: var(--azul-escuro);
+  font-weight: bold;
+}
+
+/* Botões */
+.btn-primary {
+  background-color: var(--azul-escuro);
+  border-color: var(--azul-escuro);
+}
+.btn-primary:hover {
+  background-color: var(--dourado);
+  border-color: var(--dourado);
+  color: var(--azul-escuro);
+}
+.btn-outline-secondary {
+  border-color: var(--azul-escuro);
+  color: var(--azul-escuro);
+}
+.btn-outline-secondary:hover {
+  background: var(--dourado);
+  border-color: var(--dourado);
+  color: var(--azul-escuro);
+}
+
+/* Navbar */
+.navbar {
+  background-color: var(--azul-escuro) !important;
+}
+.navbar-brand {
+  color: #fff !important;
+  font-weight: bold;
+}
+.navbar .btn-outline-light:hover {
+  background: var(--dourado);
+  border-color: var(--dourado);
+  color: var(--azul-escuro);
+}
+
+/* Links */
+a, .prop-link {
+  color: var(--azul-escuro);
+  text-decoration: none;
+}
+a:hover, .prop-link:hover {
+  color: var(--dourado);
+  text-decoration: underline;
+}
