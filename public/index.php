@@ -1,4 +1,6 @@
 ﻿<?php
+
+//Teste github
 session_start();
 
 // Carrega helpers
