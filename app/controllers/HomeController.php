@@ -57,21 +57,6 @@ class HomeController {
                     $dados = $json;
                 }
 
-                // 🔍 Filtro local multi-termos (AND/OR)
-                if ($search !== '') {
-                    $terms = preg_split('/[\s,]+/', mb_strtolower($search), -1, PREG_SPLIT_NO_EMPTY);
-                    $dados = array_filter($dados, function($item) use ($terms, $mode) {
-                        $pn = mb_strtolower($item["prop_num"] ?? '');
-                        $em = mb_strtolower($item["prop_ementa"] ?? '');
-                        $au = mb_strtolower($item["prop_autordoc_1"] ?? '');
-                        foreach ($terms as $term) {
-                            $match = str_contains($pn, $term) || str_contains($em, $term) || str_contains($au, $term);
-                            if ($match && $mode === 'OR') return true;
-                            if (!$match && $mode === 'AND') return false;
-                        }
-                        return $mode === 'AND';
-                    });
-                }
             } else {
                 $erro = "Erro ao decodificar JSON.";
             }

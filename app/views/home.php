@@ -1,35 +1,11 @@
-﻿<?php
+<?php
 $title = "Dashboard – Sistema";
 ob_start();
 ?>
-<!-- nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
-  <div class="container">
-    <a class="navbar-brand" href="#">📊 Dashboard</a>
-    <div class="d-flex"><a href="/logout" class="btn btn-outline-light">Sair</a></div>
-  </div>
-</nav -->
 
 <div class="container">
   <h3>Bem-vindo, <?= htmlspecialchars($username) ?> </h3> <br>
-
-  <!-- Filtro de busca -->
-  <form method="get" class="row g-2 mb-4">
-    <div class="col-md-8">
-      <input type="text" name="search" class="form-control"
-             placeholder="🔍 Buscar por proposição, ementa ou autor(a)"
-             value="<?= htmlspecialchars($search) ?>"/>
-      <input type="hidden" name="page" value="1"/>
-    </div>
-    <div class="col-md-2">
-      <select name="mode" class="form-select">
-        <option value="AND" <?= $mode === 'AND' ? 'selected' : '' ?>>Todos os termos (AND)</option>
-        <option value="OR" <?= $mode === 'OR' ? 'selected' : '' ?>>Qualquer termo (OR)</option>
-      </select>
-    </div>
-    <div class="col-md-2 d-grid">
-      <button type="submit" class="btn btn-outline-secondary">Buscar</button>
-    </div>
-  </form>
+  
 
   <?php if ($erro): ?>
     <div class="alert alert-warning"><?= $erro ?></div>
