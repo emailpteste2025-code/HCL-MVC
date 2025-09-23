@@ -24,15 +24,22 @@ class HomeController {
         }
 
         // Paginação e busca
-        $page   = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
+        $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
         $search = $_GET['search'] ?? '';
-        $mode   = ($_GET['mode'] ?? 'AND') === 'OR' ? 'OR' : 'AND';
-        $count  = 5;
-        $start  = ($page - 1) * $count;
+        $mode = ($_GET['mode'] ?? 'AND') === 'OR' ? 'OR' : 'AND';
+        $count = 5;
+        $start = ($page - 1) * $count;
 
-        $url = "http://10.100.2.64:8880/api/v1/lists/vlei?dataSource=scopeprojlei&richTextAs=markdown&count=$count&start=$start&documents=true&attachmentnames=true";
-
-        $ch = curl_init($url);
+        // URL para paginação (mantida conforme solicitado)
+        $paginationUrl = "http://10.100.2.64:8880/api/v1/lists/vlei?dataSource=scopeprojlei&richTextAs=markdown&count=$count&start=$start&documents=true&attachmentnames=true";
+        
+        // URL para busca (sem parâmetros de paginação para buscar em todos os dados)
+        $searchUrl = "http://10.100.2.64:8880/api/v1/lists/vlei?dataSource=scopeprojlei&richTextAs=markdown&documents=true&attachmentnames=true&search=" . urlencode($search);
+        
+        // Determina qual URL usar com base na presença de busca
+        $activeUrl = empty($search) ? $paginationUrl : $searchUrl;
+        
+        $ch = curl_init($activeUrl);
         curl_setopt($ch, CURLOPT_HTTPHEADER, ["Authorization: Bearer $token"]);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $response = curl_exec($ch);
@@ -41,7 +48,7 @@ class HomeController {
 
         $dados = [];
         $total = null;
-        $erro  = null;
+        $erro = null;
 
         if ($httpCode === 200) {
             $json = json_decode($response, true);
@@ -56,7 +63,29 @@ class HomeController {
                 } elseif (array_keys($json) === range(0, count($json) - 1)) {
                     $dados = $json;
                 }
-
+                
+                // Aplicar filtro de busca se houver termo de busca
+                if (!empty($search)) {
+                    $filteredDados = [];
+                    foreach ($dados as $item) {
+                        // Busca em prop_num (proposição)
+                        $matchPropNum = isset($item['prop_num']) && stripos($item['prop_num'], $search) !== false;
+                        
+                        // Busca em prop_autordoc_1 (autor)
+                        $matchAutor = isset($item['prop_autordoc_1']) && stripos($item['prop_autordoc_1'], $search) !== false;
+                        
+                        // Busca em prop_data_publ (ano)
+                        $matchDataPubl = isset($item['prop_data_publ']) && stripos($item['prop_data_publ'], $search) !== false;
+                        
+                        // Se encontrou em qualquer um dos campos, adiciona ao resultado
+                        if ($matchPropNum || $matchAutor || $matchDataPubl) {
+                            $filteredDados[] = $item;
+                        }
+                    }
+                    
+                    $dados = $filteredDados;
+                    $total = count($filteredDados);
+                }
             } else {
                 $erro = "Erro ao decodificar JSON.";
             }
@@ -72,10 +101,9 @@ class HomeController {
             $lastPage = ($dados && count($dados) == $count) ? $page + 1 : $page;
         }
                 
-
         // passa variáveis pra view
         ob_start();
-        require __DIR__ . '/../Views/home.php';
+        require __DIR__ . '/../views/home.php';
         $content = ob_get_clean();
 
         $title = "Dashboard – Sistema";
@@ -91,7 +119,7 @@ class HomeController {
         </nav>
         HTML;
 
-        require __DIR__ . '/../Views/layout.php';
+        require __DIR__ . '/../views/layout.php';
     }
 }
  

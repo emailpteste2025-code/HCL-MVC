@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $title = "Dashboard – Sistema";
 ob_start();
 ?>
@@ -7,10 +7,10 @@ ob_start();
   <h3>Bem-vindo, <?= htmlspecialchars($username) ?> </h3> <br>
   
   <!-- Formulário de busca -->
-  <form method="get" action="/home" class="row mb-4">
+  <form method="get" action="/home" class="row mb-4" id="searchForm">
     <div class="col-md-10">
       <input type="text" name="search" value="<?= htmlspecialchars($search) ?>" 
-             class="form-control" placeholder="Buscar por Proposição (123/2023), Autor ou Ano (2021)">202
+             class="form-control" placeholder="Buscar por Proposição (123/2023), Autor ou Ano (2021)" id="searchInput">
     </div>
     <div class="col-md-2">
       <button type="submit" class="btn btn-primary w-100">🔍 Buscar</button>
@@ -90,9 +90,12 @@ ob_start();
       </nav>
     </div>
 
-
   <?php endif; ?>
 </div>
+
+<!-- Incluindo o arquivo JavaScript externo para a funcionalidade de busca -->
+<script src="/js/search.js"></script>
+
 <?php
 $content = ob_get_clean();
 require __DIR__ . '/layout.php';
