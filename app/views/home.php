@@ -6,6 +6,16 @@ ob_start();
 <div class="container">
   <h3>Bem-vindo, <?= htmlspecialchars($username) ?> </h3> <br>
   
+  <!-- Formulário de busca -->
+  <form method="get" action="/home" class="row mb-4">
+    <div class="col-md-10">
+      <input type="text" name="search" value="<?= htmlspecialchars($search) ?>" 
+             class="form-control" placeholder="Buscar por Proposição (123/2023), Autor ou Ano (2021)">202
+    </div>
+    <div class="col-md-2">
+      <button type="submit" class="btn btn-primary w-100">🔍 Buscar</button>
+    </div>
+  </form>
 
   <?php if ($erro): ?>
     <div class="alert alert-warning"><?= $erro ?></div>
