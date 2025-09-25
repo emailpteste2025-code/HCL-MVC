@@ -83,8 +83,11 @@ class HomeController {
                         }
                     }
                     
-                    $dados = $filteredDados;
+                    // Armazena o total de resultados encontrados
                     $total = count($filteredDados);
+                    
+                    // Aplica paginação nos resultados filtrados
+                    $dados = array_slice($filteredDados, $start, $count);
                 }
             } else {
                 $erro = "Erro ao decodificar JSON.";
@@ -118,7 +121,6 @@ class HomeController {
             </div>
         </nav>
         HTML;
-
         require __DIR__ . '/../views/layout.php';
     }
 }
