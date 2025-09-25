@@ -8,14 +8,37 @@ ob_start();
   
   <!-- Formulário de busca -->
   <form method="get" action="/home" class="row mb-4" id="searchForm">
-    <div class="col-md-10">
+    <div class="col-md-10 search-container">
       <input type="text" name="search" value="<?= htmlspecialchars($search) ?>" 
              class="form-control" placeholder="Buscar por Proposição (123/2023), Autor ou Ano (2021)" id="searchInput">
+      <span id="clearSearch" class="clear-icon" style="display: <?= !empty($search) ? 'block' : 'none' ?>;">
+        <i class="bi bi-x-lg"></i>
+      </span>
     </div>
     <div class="col-md-2">
       <button type="submit" class="btn btn-primary w-100">🔍 Buscar</button>
     </div>
   </form>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const searchInput = document.getElementById('searchInput');
+      const clearButton = document.getElementById('clearSearch');
+      
+      // Mostrar/ocultar o botão de limpar com base no conteúdo do campo
+      searchInput.addEventListener('input', function() {
+        clearButton.style.display = this.value ? 'block' : 'none';
+      });
+      
+      // Limpar a busca quando clicar no X
+      if (clearButton) {
+        clearButton.addEventListener('click', function() {
+          searchInput.value = '';
+          document.getElementById('searchForm').submit();
+        });
+      }
+    });
+  </script>
 
   <?php if ($erro): ?>
     <div class="alert alert-warning"><?= $erro ?></div>
