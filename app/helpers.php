@@ -7,7 +7,11 @@ function loadEnv($path = '.env') {
     $env = [];
     foreach ($lines as $line) {
         if (strpos(trim($line), '#') === 0) continue;
-        [$name, $value] = explode('=', $line, 2);
+        
+        $parts = explode('=', $line, 2);
+        if (count($parts) !== 2) continue; // pula linhas mal formatadas
+
+        [$name, $value] = $parts;
         $env[trim($name)] = trim($value);
     }
     return $env;
