@@ -19,7 +19,7 @@
                         <?php endif; ?>
 
                         <?php if (!empty($error)): ?>
-                            <div class="alert alert-danger"><?= $error ?></div>
+                            <div class="alert alert-danger"> Senha inválida. Verifique e tente de novo. </div>
                         <?php endif; ?>
 
                         <form method="post">
