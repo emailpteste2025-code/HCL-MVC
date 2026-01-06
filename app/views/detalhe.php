@@ -139,7 +139,12 @@ function coletarNomesPdf(array $doc): array {
 
 <div class="card shadow-lg border-0 rounded-4">
     <div class="card-body">
-        <h3 class="card-title mb-4">Detalhes do Documento</h3>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3 class="card-title mb-0">Detalhes do Documento</h3>
+            <button type="button" class="btn btn-secondary" id="btnPdf">
+                <i class="bi bi-file-earmark-pdf"></i> Gerar PDF
+            </button>
+        </div>
 
         <?php if ($docDecoded): ?>
             <div class="mb-4">
@@ -175,3 +180,27 @@ function coletarNomesPdf(array $doc): array {
         <?php endif; ?>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const btn = document.getElementById('btnPdf');
+    if (btn) {
+        btn.addEventListener('click', function () {
+            window.print();
+        });
+    }
+});
+</script>
+
+<style>
+@media print {
+    .navbar, #btnPdf, .btn, .alert { display: none !important; }
+    body { background: #fff !important; }
+    pre {
+        background: #fff !important;
+        color: #000 !important;
+        border: 1px solid #ccc;
+        padding: 12px;
+    }
+}
+</style>

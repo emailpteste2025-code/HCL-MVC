@@ -66,7 +66,11 @@ ob_start();
           $doc = urlencode(json_encode($item));
         ?>
         <tr>
-          <td><a href="/detalhe?doc=<?= $doc ?>" target="_blank" class="prop-link"><?= $prop ?></a></td>
+          <td>
+            <a href="/detalhe?doc=<?= $doc ?>" target="_blank" class="prop-link"><?= $prop ?></a>
+            <br>
+            <a href="/dados-brutos?doc=<?= $doc ?>" target="_blank" class="text-muted small">dados brutos</a>
+          </td>
           <td><?= $ementa ?></td>
           <td><?= $dataPubl ?></td>
           <td><?= $autor ?></td>
